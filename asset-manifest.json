@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/saga-take-home-test/static/css/main.5f361e03.chunk.css",
+    "main.js": "/saga-take-home-test/static/js/main.7193587d.chunk.js",
+    "main.js.map": "/saga-take-home-test/static/js/main.7193587d.chunk.js.map",
+    "runtime-main.js": "/saga-take-home-test/static/js/runtime-main.c1523a03.js",
+    "runtime-main.js.map": "/saga-take-home-test/static/js/runtime-main.c1523a03.js.map",
+    "static/js/2.58bc8424.chunk.js": "/saga-take-home-test/static/js/2.58bc8424.chunk.js",
+    "static/js/2.58bc8424.chunk.js.map": "/saga-take-home-test/static/js/2.58bc8424.chunk.js.map",
+    "index.html": "/saga-take-home-test/index.html",
+    "precache-manifest.7ad8ea421940dab0b82f8314a8a23581.js": "/saga-take-home-test/precache-manifest.7ad8ea421940dab0b82f8314a8a23581.js",
+    "service-worker.js": "/saga-take-home-test/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/saga-take-home-test/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.58bc8424.chunk.js.LICENSE.txt": "/saga-take-home-test/static/js/2.58bc8424.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/saga-take-home-test/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c1523a03.js",
+    "static/js/2.58bc8424.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.7193587d.chunk.js"
+  ]
+}
