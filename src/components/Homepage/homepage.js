@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
+import Dropdown from '../Drop-Down/drop-down';
 import { connect } from "react-redux";
 import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
 import { Link } from 'react-router-dom';
@@ -25,9 +26,9 @@ const styles = (theme) => {
         cursor: 'pointer',
       },
       searchInput: {
-        width: '100%',
+        width: '96.5%',
         padding: '15px',
-        margin: '10px',
+        margin: '10px 0 0 0',
       },
       link: {
         textDecoration: 'none',
@@ -47,8 +48,7 @@ class Homepage extends React.Component {
 
     render() {
       const { posts, classes, results } = this.props;
-      const renderPosts = results ? results : posts;
-
+      const renderPosts = results.length > 0 ? results : posts;
         
         return (
           <div className={classes.root}>
@@ -56,6 +56,9 @@ class Homepage extends React.Component {
                 Search by Title:
               </div>
               <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
+              {results.length > 0 && results.length !== 100 && (
+                <Dropdown />
+              )}
               <Link className={classes.link} to={'/edit-post-new'}>
                 <div className={classes.editAPost}>
                   Edit a Post

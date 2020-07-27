@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     posts: [],
     error: '',
     post: {},
+    results: [],
 };
 
 export default function postReducer(state = INITIAL_STATE , action) { 
@@ -15,11 +16,11 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 posts: action.payload.posts
             }
         case postsActionTypes.SET_SEARCH_RESULT: 
-            const newState = getSearchResults(state, action);
-
+            const results = getSearchResults(state, action);
+            console.log(results, 'red', action.payload.result)
             return {
                 ...state,
-                results: newState
+                results
             }
         case postsActionTypes.SET_SINGLE_POST_SUCCESS: 
             return {

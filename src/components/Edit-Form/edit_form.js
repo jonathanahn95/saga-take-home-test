@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
+import Dropdown from '../Drop-Down/drop-down';
 
 const styles = (theme) => {
     return {
@@ -74,6 +75,8 @@ class EditForm extends React.Component {
     }
 
     handleInputChange = (e, type) => {  
+        // this.props.getSearchResults(e.target.value)
+
         this.setState({
             [type]: e.target.value,
         })
@@ -81,6 +84,8 @@ class EditForm extends React.Component {
 
     render() {
         const { classes } = this.props;
+
+        console.log(this.state)
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
