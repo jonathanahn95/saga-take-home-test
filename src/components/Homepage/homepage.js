@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from '@material-ui/styles';
+import Posts from '../Posts/posts';
 
 const styles = (theme) => {
     return {
@@ -26,12 +27,15 @@ class Homepage extends React.Component {
 
     render() {
         const { posts, classes } = this.props;
-
+        
         return (
           <div className={classes.root}>
               <div>
                 Posts:
               </div>
+              {posts.posts.length > 0 && (
+                <Posts posts={posts.posts} />
+              )}
           </div>
         );
       }

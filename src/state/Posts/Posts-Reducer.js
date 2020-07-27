@@ -7,15 +7,13 @@ const INITIAL_STATE = {
 
 export default function postReducer(state = INITIAL_STATE , action) { 
     switch (action.type) { 
-        case postsActionTypes.SET_POSTS_SUCCESS: {
+        case postsActionTypes.SET_POSTS_SUCCESS: 
             return {
                 ...state,
                 posts: action.payload.posts
             }
-        }
-        default: {
+        default: 
             return state;
-        }
     }
 }
 

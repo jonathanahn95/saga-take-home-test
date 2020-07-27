@@ -4,7 +4,6 @@ import { getPostsRequest } from "../../state/Posts/Posts-Actions";
 
 
 const mapStateToProps = ({ posts }) => {
-  console.log(posts);
   return {
     posts
   };
