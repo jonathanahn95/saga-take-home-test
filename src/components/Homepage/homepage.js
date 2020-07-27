@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
 import { connect } from "react-redux";
 import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => {
     return {
@@ -14,10 +15,23 @@ const styles = (theme) => {
         fontSize: '35px',
         textAlign: 'center',
       },
+      editAPost: {
+        fontSize: '35px',
+        textAlign: 'center',
+        border: '1px solid black',
+        padding: '15px',
+        width: '50%',
+        margin: '20px auto',
+        cursor: 'pointer',
+      },
       searchInput: {
         width: '100%',
         padding: '15px',
         margin: '10px',
+      },
+      link: {
+        textDecoration: 'none',
+        color: 'black',
       },
     };
   };
@@ -42,6 +56,11 @@ class Homepage extends React.Component {
                 Search by Title:
               </div>
               <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
+              <Link className={classes.link} to={'/edit-post-new'}>
+                <div className={classes.editAPost}>
+                  Edit a Post
+                </div>
+              </Link>
               <div className={classes.title}>
                 Posts:
               </div>

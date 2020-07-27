@@ -18,8 +18,6 @@ export const getSearchResults = (result) => ({
     }
 });
 
-
-
 export const setSearchResults = (result) => ({
     type: postsActionTypes.SET_SEARCH_RESULT,
     payload: {
@@ -27,4 +25,28 @@ export const setSearchResults = (result) => ({
     }
 });
 
+export const getSinglePostRequest = (id) => ({
+    type: postsActionTypes.GET_SINGLE_POST_REQUEST,
+    id,
+});
 
+export const setSinglePostSuccess = (post) => ({
+    type: postsActionTypes.SET_SINGLE_POST_SUCCESS,
+    payload: {
+        post
+    },
+});
+
+export const editPost = (post) => ({
+    type: postsActionTypes.EDIT_POST,
+    payload: {
+        post
+    },
+});
+
+export const setEditPost = (post) => ({
+    type: postsActionTypes.SET_EDIT_POST,
+    payload: {
+        post
+    },
+});

@@ -3,7 +3,6 @@ import * as actions from './Posts-Actions';
 import * as api from './Posts-Api';
 import postsActionTypes from './Posts-ActionTypes';
 
-//worker sagas
 function* getPosts() { 
     try { 
         const result = yield call(api.getPosts)
@@ -31,9 +30,42 @@ function* watchSearchResult() {
     yield takeLatest(postsActionTypes.GET_SEARCH_RESULT, getSearchResult)
 }
 
+function* getSinglePost(action) { 
+    try { 
+        const result = yield call(api.getSinglePost, action.id)
+        yield put(actions.setSinglePostSuccess(result.data))
+    } catch (e) { 
+        console.log(e)
+        // yield put(actions.getSinglePostError())
+
+    }
+}
+
+
+function* watchSinglePostRequest() { 
+    yield takeEvery(postsActionTypes.GET_SINGLE_POST_REQUEST, getSinglePost)
+}
+
+function* editPost(action) { 
+    try { 
+        const result = yield call(api.editPost, action.payload.post)
+        yield put(actions.setEditPost(result.data))
+    } catch (e) { 
+        // yield put(actions.usersError({
+        //     error: 'An error occured',
+        // }))
+    }
+}
+
+function* watchEditPostRequest() {
+    yield takeLatest(postsActionTypes.EDIT_POST, editPost)
+}
+
 const postsSagas = [
     fork(watchGetPostsRequest),
     fork(watchSearchResult),
+    fork(watchSinglePostRequest),
+    fork(watchEditPostRequest),
 ]
 
 export default postsSagas;

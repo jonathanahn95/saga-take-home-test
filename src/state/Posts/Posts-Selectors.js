@@ -4,3 +4,10 @@ export const getSearchResults = (state, action) => {
     }
     return [];
 };
+
+export const getSinglePostInState = (posts, paramsId) => {
+    if (posts.posts.length > 0) {
+        return posts.posts.find((post) => post.id.toString() === paramsId)
+    }
+    return null;
+};

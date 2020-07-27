@@ -3,7 +3,8 @@ import { getSearchResults } from './Posts-Selectors';
 
 const INITIAL_STATE = {
     posts: [],
-    error: ''
+    error: '',
+    post: {},
 };
 
 export default function postReducer(state = INITIAL_STATE , action) { 
@@ -19,6 +20,16 @@ export default function postReducer(state = INITIAL_STATE , action) {
             return {
                 ...state,
                 results: newState
+            }
+        case postsActionTypes.SET_SINGLE_POST_SUCCESS: 
+            return {
+                ...state,
+                post: action.payload.post
+            }
+        case postsActionTypes.SET_EDIT_POST: 
+            return {
+                ...state,
+                post: action.payload.post
             }
         default: 
             return state;
