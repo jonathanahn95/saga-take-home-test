@@ -1,20 +1,13 @@
-export const Types = {
-    GET_POSTS_REQUESTS : 'GET_POSTS_REQUESTS',
-    SET_POSTS_SUCCESS : 'SET_POSTS_SUCCESS',
-}
+import postsActionTypes from './Posts-ActionTypes';
 
 export const getPostsRequest = () => ({
-    type: Types.GET_POSTS_REQUESTS
+    type: postsActionTypes.GET_POSTS_REQUESTS
 });
 
-export const setPostsSuccess = (posts) => {
-    return (
-            {
-                type: Types.SET_POSTS_SUCCESS,
-                payload: {
-                    posts
-                },
-            }
-        );
-};
+export const setPostsSuccess = (posts) => ({
+    type: postsActionTypes.SET_POSTS_SUCCESS,
+    payload: {
+        posts
+    },
+});
 

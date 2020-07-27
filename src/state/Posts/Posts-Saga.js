@@ -1,6 +1,7 @@
 import { takeEvery, takeLatest, take, call, fork, put } from 'redux-saga/effects';
 import * as actions from './Posts-Actions';
 import * as api from './Posts-Api';
+import postsActionTypes from './Posts-ActionTypes';
 
 //worker sagas
 function* getPosts() { 
@@ -13,7 +14,7 @@ function* getPosts() {
 }
 
 function* watchGetPostsRequest() { 
-    yield takeEvery(actions.Types.GET_POSTS_REQUESTS, getPosts)
+    yield takeEvery(postsActionTypes.GET_POSTS_REQUESTS, getPosts)
 }
 
 const postsSagas = [

@@ -1,4 +1,4 @@
-import { Types } from './Posts-Actions';
+import postsActionTypes from './Posts-ActionTypes';
 
 const INITIAL_STATE = {
     posts: [],
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 export default function postReducer(state = INITIAL_STATE , action) { 
     switch (action.type) { 
-        case Types.SET_POSTS_SUCCESS: {
+        case postsActionTypes.SET_POSTS_SUCCESS: {
             return {
                 ...state,
                 posts: action.payload.posts
