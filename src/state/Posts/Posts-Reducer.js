@@ -1,4 +1,5 @@
 import postsActionTypes from './Posts-ActionTypes';
+import { getSearchResults } from './Posts-Selectors';
 
 const INITIAL_STATE = {
     posts: [],
@@ -11,6 +12,13 @@ export default function postReducer(state = INITIAL_STATE , action) {
             return {
                 ...state,
                 posts: action.payload.posts
+            }
+        case postsActionTypes.SET_SEARCH_RESULT: 
+            const newState = getSearchResults(state, action);
+
+            return {
+                ...state,
+                results: newState
             }
         default: 
             return state;

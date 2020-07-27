@@ -17,8 +17,23 @@ function* watchGetPostsRequest() {
     yield takeEvery(postsActionTypes.GET_POSTS_REQUESTS, getPosts)
 }
 
+function* getSearchResult(action) { 
+    try { 
+        yield put(actions.setSearchResults(action.payload.result))
+    } catch (e) { 
+        // yield put(actions.usersError({
+        //     error: 'An error occured',
+        // }))
+    }
+}
+
+function* watchSearchResult() {
+    yield takeLatest(postsActionTypes.GET_SEARCH_RESULT, getSearchResult)
+}
+
 const postsSagas = [
     fork(watchGetPostsRequest),
+    fork(watchSearchResult),
 ]
 
 export default postsSagas;

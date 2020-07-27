@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
+import { connect } from "react-redux";
+import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
 
 const styles = (theme) => {
     return {
@@ -25,20 +27,47 @@ class Homepage extends React.Component {
         this.props.getPostsRequest();
     }
 
+    onChangeHandler = e => {
+      this.props.getSearchResults(e.target.value)
+    }
+
     render() {
-        const { posts, classes } = this.props;
+      const { posts, classes, results } = this.props;
+      const renderPosts = results ? results : posts;
+
         
         return (
           <div className={classes.root}>
-              <div>
+              <div className={classes.title}>
+                Search by Title:
+              </div>
+              <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
+              <div className={classes.title}>
                 Posts:
               </div>
-              {posts.posts.length > 0 && (
-                <Posts posts={posts.posts} />
+              {renderPosts.length > 0 && (
+                <Posts posts={renderPosts} />
               )}
           </div>
         );
       }
 }
 
-export default withStyles(styles)(Homepage);
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts.posts,
+    results: state.posts.results
+  };
+};
+
+const mapDispatchToProps = dispatch => { 
+  return {
+      getPostsRequest: () => dispatch(getPostsRequest()),
+      getSearchResults: (value) => dispatch(getSearchResults(value)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Homepage));

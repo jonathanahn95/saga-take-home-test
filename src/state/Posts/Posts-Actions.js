@@ -8,6 +8,23 @@ export const setPostsSuccess = (posts) => ({
     type: postsActionTypes.SET_POSTS_SUCCESS,
     payload: {
         posts
-    },
+    }
 });
+
+export const getSearchResults = (result) => ({
+    type: postsActionTypes.GET_SEARCH_RESULT,
+    payload: {
+        result
+    }
+});
+
+
+
+export const setSearchResults = (result) => ({
+    type: postsActionTypes.SET_SEARCH_RESULT,
+    payload: {
+        result
+    }
+});
+
 

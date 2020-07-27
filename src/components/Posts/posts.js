@@ -31,6 +31,7 @@ const styles = (theme) => {
 class Posts extends React.Component {
     render() {
         const { posts, classes } = this.props;
+
         return (
           <div className={classes.root}>
               {posts.map((post) => (
