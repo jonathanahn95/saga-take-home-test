@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
-import reducers from './reducers/index';
+import reducers from './state/reducers/index';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagas';
+import rootSaga from './state/sagas/index';
 import { HashRouter } from "react-router-dom";
 
 axios.defaults.withCredentials = true;

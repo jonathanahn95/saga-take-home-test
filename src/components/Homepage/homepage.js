@@ -25,7 +25,7 @@ class Homepage extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { posts, classes } = this.props;
 
         return (
           <div className={classes.root}>

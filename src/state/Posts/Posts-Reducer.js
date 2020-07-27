@@ -1,4 +1,4 @@
-import { Types } from '../actions/posts';
+import { Types } from './Posts-Actions';
 
 const INITIAL_STATE = {
     posts: [],

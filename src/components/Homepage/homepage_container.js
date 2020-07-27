@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 import Homepage from "./homepage";
-import { getPostsRequest } from "../../actions/posts";
+import { getPostsRequest } from "../../state/Posts/Posts-Actions";
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ posts }) => {
+  console.log(posts);
   return {
-      asd: 'asd',
+    posts
   };
 };
 
