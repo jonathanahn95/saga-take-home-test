@@ -3,15 +3,17 @@ import * as api from '../Posts-Api';
 import * as actions from '../Posts-Actions';
 import { call, put } from 'redux-saga/effects';
 
+const MOCK_RESPONSE = {
+    body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
+    id: 1,
+    title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    userId: 1,
+};
+
 describe('getPosts', () => {
     it('successfully triggers success action with posts', () => {
         const generator = getPosts();
-        const response = { data: [{
-            body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-            id: 1,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            userId: 1,
-        }]}
+        const response = { data: [ MOCK_RESPONSE ]}
 
 
         expect(generator.next().value)
@@ -46,12 +48,7 @@ describe('getSinglePost', () => {
     it('successfully triggers success action with post', () => {
         const payload = {id: "1"}
         const generator = getSinglePost(payload);
-        const response = { data: {
-            body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-            id: 1,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            userId: 1,
-        }}
+        const response = { data: MOCK_RESPONSE }
 
         expect(generator.next().value)
             .toEqual(call(api.getSinglePost, payload.id))
@@ -69,12 +66,7 @@ describe('getSinglePost', () => {
     it('successfully triggers success action with post', () => {
         const payload = {id: "1"}
         const generator = getSinglePost(payload);
-        const response = { data: {
-            body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-            id: 1,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            userId: 1,
-        }}
+        const response = { data: MOCK_RESPONSE }
 
         expect(generator.next().value)
             .toEqual(call(api.getSinglePost, payload.id))
@@ -90,21 +82,9 @@ describe('getSinglePost', () => {
 
 describe('editPost', () => {
     it('successfully triggers success action with edit info', () => {
-        const payload = { payload: {
-            post : {
-            body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-            id: 1,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            userId: 1,
-        }}}
+        const payload = { payload: { post : MOCK_RESPONSE }}
         const generator = editPost(payload);
-        const result = { data: {
-            post : {
-            body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-            id: 1,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            userId: 1,
-        }}}
+        const result = { data: { post : MOCK_RESPONSE }}
 
 
         expect(generator.next().value)
