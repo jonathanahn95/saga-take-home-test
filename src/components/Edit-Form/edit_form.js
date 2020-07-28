@@ -85,8 +85,6 @@ class EditForm extends React.Component {
     render() {
         const { classes } = this.props;
 
-        console.log(this.state)
-
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
             <div className={classes.title}>
