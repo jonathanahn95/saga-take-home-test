@@ -1,9 +1,9 @@
-import { takeEvery, takeLatest, take, call, fork, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, fork, put } from 'redux-saga/effects';
 import * as actions from './Posts-Actions';
 import * as api from './Posts-Api';
 import postsActionTypes from './Posts-ActionTypes';
 
-function* getPosts() { 
+export function* getPosts() { 
     try { 
         const result = yield call(api.getPosts)
         yield put(actions.setPostsSuccess(result.data))
@@ -16,9 +16,9 @@ function* watchGetPostsRequest() {
     yield takeEvery(postsActionTypes.GET_POSTS_REQUESTS, getPosts)
 }
 
-function* getSearchResult(action) { 
+export function* getSearchResult(payload) { 
     try { 
-        yield put(actions.setSearchResults(action.payload.result))
+        yield put(actions.setSearchResults(payload.payload.result))
     } catch (e) { 
         // yield put(actions.usersError({
         //     error: 'An error occured',
@@ -30,9 +30,9 @@ function* watchSearchResult() {
     yield takeLatest(postsActionTypes.GET_SEARCH_RESULT, getSearchResult)
 }
 
-function* getSinglePost(action) { 
+export function* getSinglePost(payload) { 
     try { 
-        const result = yield call(api.getSinglePost, action.id)
+        const result = yield call(api.getSinglePost, payload.id)
         yield put(actions.setSinglePostSuccess(result.data))
     } catch (e) { 
         console.log(e)
@@ -46,9 +46,10 @@ function* watchSinglePostRequest() {
     yield takeEvery(postsActionTypes.GET_SINGLE_POST_REQUEST, getSinglePost)
 }
 
-function* editPost(action) { 
+export function* editPost(payload) { 
+    console.log(payload, 'edit')
     try { 
-        const result = yield call(api.editPost, action.payload.post)
+        const result = yield call(api.editPost, payload.payload.post)
         yield put(actions.setEditPost(result.data))
     } catch (e) { 
         // yield put(actions.usersError({

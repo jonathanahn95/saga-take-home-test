@@ -1,8 +1,6 @@
 import React from "react";
 import { withStyles } from '@material-ui/styles';
-import Posts from '../Posts/posts';
 import { connect } from "react-redux";
-import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
 import { Link } from 'react-router-dom';
 
 const styles = (theme) => {
@@ -51,13 +49,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => { 
-  return {
-      ds: 'dsa'
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(withStyles(styles)(DropDown));

@@ -50,7 +50,6 @@ class EditForm extends React.Component {
     componentDidMount() { 
         //should i be using the state from previous page and using selector or making another api call to fetch single post
         if (this.props.paramsId !== 'new' && !this.props.postInState) { 
-            console.log('fetch post')
             this.props.getSinglePostRequest(this.props.paramsId)
         } 
     }

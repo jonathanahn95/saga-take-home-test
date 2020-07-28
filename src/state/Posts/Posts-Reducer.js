@@ -17,7 +17,6 @@ export default function postReducer(state = INITIAL_STATE , action) {
             }
         case postsActionTypes.SET_SEARCH_RESULT: 
             const results = getSearchResults(state, action);
-            console.log(results, 'red', action.payload.result)
             return {
                 ...state,
                 results
