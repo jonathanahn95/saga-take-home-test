@@ -1,11 +1,12 @@
 import postsActionTypes from './Posts-ActionTypes';
-import { getSearchResults } from './Posts-Selectors';
+import { getDropDownResults } from './Posts-Selectors';
 
 const INITIAL_STATE = {
     posts: [],
     error: '',
     post: {},
-    results: [],
+    dropdown: [],
+    searchResults: [],
 };
 
 export default function postReducer(state = INITIAL_STATE , action) { 
@@ -15,11 +16,11 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 ...state,
                 posts: action.payload.posts
             }
-        case postsActionTypes.SET_SEARCH_RESULT: 
-            const results = getSearchResults(state, action);
+        case postsActionTypes.SET_DROPDOWN_RESULT: 
+            const dropdown = getDropDownResults(state, action);
             return {
                 ...state,
-                results
+                dropdown
             }
         case postsActionTypes.SET_SINGLE_POST_SUCCESS: 
             return {
@@ -31,10 +32,16 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 ...state,
                 post: action.payload.post
             }
-        case postsActionTypes.SET_CLEARED_SEARCH_RESULTS: 
+        case postsActionTypes.SET_CLEARED_DROPDOWN_RESULTS: 
             return {
                 ...state,
-                results: []
+                dropdown: []
+            }
+        case postsActionTypes.SET_SEARCH_RESULT: 
+            const searchResults = getDropDownResults(state, action);
+            return {
+                ...state,
+                searchResults
             }
         default: 
             return state;

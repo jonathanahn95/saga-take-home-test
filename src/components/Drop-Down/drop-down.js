@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
-import { clearSearchResults } from "../../state/Posts/Posts-Actions";
+import { clearDropDownResults } from "../../state/Posts/Posts-Actions";
 
 const styles = (theme) => {
     return {
@@ -29,24 +29,24 @@ const styles = (theme) => {
   
 class DropDown extends React.Component {
     componentWillUnmount() { 
-      this.props.clearSearchResults();
+      this.props.clearDropDownResults();
     }
 
     componentDidUpdate(prevProps, prevState) { 
       if (prevProps.paramsId !== this.props.paramsId) { 
-        this.props.clearSearchResults();
+        this.props.clearDropDownResults();
       }
     }
     
     render() {
-      const { results, classes } = this.props;
+      const { dropdown, classes } = this.props;
         
         return (
           <div className={classes.root}>
-            {results.map((result) => (
-                <Link to={`/edit-post-${result.id}`} className={classes.link} key={result.id}>
+            {dropdown.map((dropdown) => (
+                <Link to={`/edit-post-${dropdown.id}`} className={classes.link} key={dropdown.id}>
                     <div className={classes.option}>
-                        {result.title}
+                        {dropdown.title}
                     </div>
                 </Link>
             ))}
@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   const paramsId = ownProps.match.params.id;
 
   return {
-      results: state.posts.results,
+      dropdown: state.posts.dropdown,
       paramsId,
   };
 };
@@ -67,7 +67,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => { 
   return {
-    clearSearchResults: () => dispatch(clearSearchResults()),
+    clearDropDownResults: () => dispatch(clearDropDownResults()),
   };
 };
 

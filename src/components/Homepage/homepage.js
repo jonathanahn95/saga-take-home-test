@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
 import Dropdown from '../Drop-Down/drop-down';
-import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
+import { getPostsRequest, getDropDownResults, getSearchResults } from "../../state/Posts/Posts-Actions";
 
 const styles = (theme) => {
     return {
@@ -34,31 +34,56 @@ const styles = (theme) => {
         textDecoration: 'none',
         color: 'black',
       },
+      button: {
+        backgroundColor: 'white',
+        padding: '15px 30px',
+        margin: '10px 0',
+        cursor: 'pointer',
+        width: '100%',
+      },
     };
   };
   
 class Homepage extends React.Component {
+    constructor(props) { 
+      super(props);
+      this.state = { 
+        search: '',
+      };
+    }
+
     componentDidMount() { 
         this.props.getPostsRequest();
     }
 
     onChangeHandler = e => {
-      this.props.getSearchResults(e.target.value);
+      this.setState({
+        search: e.target.value,
+      });
+
+      this.props.getDropDownResults(e.target.value);
+    }
+
+    handleOnSubmit = () => {
+      this.props.getSearchResults(this.state.search);
     }
 
     render() {
-      const { posts, classes, results } = this.props;
-      const renderPosts = results.length > 0 ? results : posts;
+      const { posts, classes, dropdown, searchResults } = this.props;
+      const renderPosts = searchResults.length > 0 ? searchResults : posts;
         
         return (
           <div className={classes.root}>
-              <div className={classes.title}>
-                Search by Title:
-              </div>
-              <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
-              {results.length > 0 && results.length !== 100 && (
-                <Dropdown />
-              )}
+              <form onSubmit={this.handleOnSubmit}>
+                <div className={classes.title}>
+                  Search by Title:
+                </div>
+                <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
+                {dropdown.length > 0 && dropdown.length !== 100 && (
+                  <Dropdown />
+                )}
+                <button className={classes.button}>Submit</button>
+              </form>
               <Link className={classes.link} to={'/edit-post-new'}>
                 <div className={classes.editAPost}>
                   Edit a Post
@@ -78,13 +103,15 @@ class Homepage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts.posts,
-    results: state.posts.results
+    dropdown: state.posts.dropdown,
+    searchResults: state.posts.searchResults
   };
 };
 
 const mapDispatchToProps = dispatch => { 
   return {
       getPostsRequest: () => dispatch(getPostsRequest()),
+      getDropDownResults: (value) => dispatch(getDropDownResults(value)),
       getSearchResults: (value) => dispatch(getSearchResults(value)),
   };
 };

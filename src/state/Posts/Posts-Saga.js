@@ -16,9 +16,9 @@ function* watchGetPostsRequest() {
     yield takeEvery(postsActionTypes.GET_POSTS_REQUESTS, getPosts)
 }
 
-export function* getSearchResult(payload) { 
+export function* getDropDownResult(payload) { 
     try { 
-        yield put(actions.setSearchResults(payload.payload.result))
+        yield put(actions.setDropDownResults(payload.payload.result))
     } catch (e) { 
         // yield put(actions.usersError({
         //     error: 'An error occured',
@@ -26,8 +26,8 @@ export function* getSearchResult(payload) {
     }
 }
 
-function* watchSearchResult() {
-    yield takeLatest(postsActionTypes.GET_SEARCH_RESULT, getSearchResult)
+function* watchDropDownResult() {
+    yield takeLatest(postsActionTypes.GET_DROPDOWN_RESULT, getDropDownResult)
 }
 
 export function* getSinglePost(payload) { 
@@ -61,20 +61,30 @@ function* watchEditPostRequest() {
     yield takeLatest(postsActionTypes.EDIT_POST, editPost)
 }
 
-function* clearSearchResult() {
-    yield put(actions.setClearedSearchResults())
+function* clearDropDownResult() {
+    yield put(actions.setClearedDropDownResults())
 }
 
-function* watchClearSearchResults() {
-    yield takeEvery(postsActionTypes.CLEAR_SEARCH_RESULTS, clearSearchResult)
+function* watchClearDropDownResults() {
+    yield takeEvery(postsActionTypes.CLEAR_DROPDOWN_RESULTS, clearDropDownResult)
+}
+
+function* getSearchResult(payload) {
+    yield put(actions.setSearchResults(payload.payload.result))
+    yield put(actions.setClearedDropDownResults())
+}
+
+function* watchSearchResults() {
+    yield takeLatest(postsActionTypes.GET_SEARCH_RESULT, getSearchResult)
 }
 
 const postsSagas = [
     fork(watchGetPostsRequest),
-    fork(watchSearchResult),
+    fork(watchDropDownResult),
     fork(watchSinglePostRequest),
     fork(watchEditPostRequest),
-    fork(watchClearSearchResults),
+    fork(watchClearDropDownResults),
+    fork(watchSearchResults),
 ]
 
 export default postsSagas;

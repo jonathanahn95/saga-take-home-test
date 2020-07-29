@@ -72,11 +72,10 @@ class EditForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.editPost(this.state);
-        // this.props.history.push('/');
     }
 
     handleInputChange = (e, type) => {  
-        this.props.getSearchResults(e.target.value);
+        this.props.getDropDownResults(e.target.value);
         
         this.setState({
             [type]: e.target.value,
@@ -84,7 +83,7 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { classes, results } = this.props;
+        const { classes, dropdown } = this.props;
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
@@ -102,7 +101,7 @@ class EditForm extends React.Component {
                         onChange={(e) => this.handleInputChange(e, 'title')}
                         value={this.state.title}
                     />
-                    {results.length > 0 && results.length !== 100 && (
+                    {dropdown.length > 0 && dropdown.length !== 100 && (
                         <Dropdown />
                     )}
                 </div>

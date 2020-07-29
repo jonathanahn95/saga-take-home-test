@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import EditForm from "./edit_form";
-import { getSinglePostRequest, editPost, getSearchResults, getPostsRequest } from "../../state/Posts/Posts-Actions";
+import { getSinglePostRequest, editPost, getDropDownResults, getPostsRequest } from "../../state/Posts/Posts-Actions";
 import { getSinglePostInState } from "../../state/Posts/Posts-Selectors";
 
 
@@ -19,7 +19,7 @@ const mapStateToProps = ({ posts }, ownProps) => {
     postInState,
     post,
     paramsId,
-    results: posts.results,
+    dropdown: posts.dropdown,
     posts: posts.posts,
   };
 };
@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getSinglePostRequest: (id) => dispatch(getSinglePostRequest(id)),
     editPost: (id) => dispatch(editPost(id)),
-    getSearchResults: (value) => dispatch(getSearchResults(value)),
+    getDropDownResults: (value) => dispatch(getDropDownResults(value)),
     getPostsRequest: () => dispatch(getPostsRequest()),
   };
 };

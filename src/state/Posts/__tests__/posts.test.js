@@ -38,7 +38,7 @@ describe('getSearchResult', () => {
         const generator = getSearchResult(payload);
 
         expect(generator.next().value)
-            .toEqual(put(actions.setSearchResults('optio')))
+            .toEqual(put(actions.setDropDownResults('optio')))
 
         
     })
