@@ -47,7 +47,6 @@ function* watchSinglePostRequest() {
 }
 
 export function* editPost(payload) { 
-    console.log(payload, 'edit')
     try { 
         const result = yield call(api.editPost, payload.payload.post)
         yield put(actions.setEditPost(result.data))
@@ -62,11 +61,20 @@ function* watchEditPostRequest() {
     yield takeLatest(postsActionTypes.EDIT_POST, editPost)
 }
 
+function* clearSearchResult() {
+    yield put(actions.setClearedSearchResults())
+}
+
+function* watchClearSearchResults() {
+    yield takeEvery(postsActionTypes.CLEAR_SEARCH_RESULTS, clearSearchResult)
+}
+
 const postsSagas = [
     fork(watchGetPostsRequest),
     fork(watchSearchResult),
     fork(watchSinglePostRequest),
     fork(watchEditPostRequest),
+    fork(watchClearSearchResults),
 ]
 
 export default postsSagas;

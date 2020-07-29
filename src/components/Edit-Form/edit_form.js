@@ -48,16 +48,17 @@ class EditForm extends React.Component {
     }
 
     componentDidMount() { 
-        //should i be using the state from previous page and using selector or making another api call to fetch single post
         if (this.props.paramsId !== 'new' && !this.props.postInState) { 
-            this.props.getSinglePostRequest(this.props.paramsId)
-        } 
+            this.props.getSinglePostRequest(this.props.paramsId);
+        } else if (this.props.paramsId === 'new' && this.props.posts.length === 0) { 
+            this.props.getPostsRequest();
+        }
     }
 
     componentDidUpdate(prevProps, prevState) { 
         const { post } = this.props;
 
-        if (prevProps.post !== post) { 
+        if (prevProps.post.id !== post.id) { 
             this.setState({
                 body: post.body,
                 id: post.id,
@@ -71,18 +72,19 @@ class EditForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.editPost(this.state);
+        // this.props.history.push('/');
     }
 
     handleInputChange = (e, type) => {  
-        // this.props.getSearchResults(e.target.value)
-
+        this.props.getSearchResults(e.target.value);
+        
         this.setState({
             [type]: e.target.value,
         })
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, results } = this.props;
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
@@ -100,6 +102,9 @@ class EditForm extends React.Component {
                         onChange={(e) => this.handleInputChange(e, 'title')}
                         value={this.state.title}
                     />
+                    {results.length > 0 && results.length !== 100 && (
+                        <Dropdown />
+                    )}
                 </div>
                 <div className={classes.inputBorder}>
                     <div className={classes.header}>

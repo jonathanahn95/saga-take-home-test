@@ -43,7 +43,7 @@ class Homepage extends React.Component {
     }
 
     onChangeHandler = e => {
-      this.props.getSearchResults(e.target.value)
+      this.props.getSearchResults(e.target.value);
     }
 
     render() {
@@ -68,7 +68,7 @@ class Homepage extends React.Component {
                 Posts:
               </div>
               {renderPosts.length > 0 && (
-                <Posts posts={renderPosts} />
+                <Posts posts={renderPosts}/>
               )}
           </div>
         );

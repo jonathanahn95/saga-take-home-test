@@ -2,6 +2,8 @@ import React from "react";
 import { withStyles } from '@material-ui/styles';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { clearSearchResults } from "../../state/Posts/Posts-Actions";
+import { withRouter } from 'react-router';
 
 const styles = (theme) => {
     return {
@@ -26,6 +28,16 @@ const styles = (theme) => {
   };
   
 class DropDown extends React.Component {
+    componentWillUnmount() { 
+      this.props.clearSearchResults();
+    }
+
+    componentDidUpdate(prevProps, prevState) { 
+      if (prevProps.paramsId !== this.props.paramsId) { 
+        this.props.clearSearchResults();
+      }
+    }
+    
     render() {
       const { results, classes } = this.props;
         
@@ -43,13 +55,24 @@ class DropDown extends React.Component {
       }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const paramsId = ownProps.match.params.id;
+
   return {
-      results: state.posts.results
+      results: state.posts.results,
+      paramsId,
   };
 };
 
-export default connect(
+
+const mapDispatchToProps = dispatch => { 
+  return {
+    clearSearchResults: () => dispatch(clearSearchResults()),
+  };
+};
+
+
+export default withRouter(connect(
   mapStateToProps,
-  null
-)(withStyles(styles)(DropDown));
+  mapDispatchToProps
+)(withStyles(styles)(DropDown)));

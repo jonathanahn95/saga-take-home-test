@@ -50,3 +50,16 @@ export const setEditPost = (post) => ({
         post
     },
 });
+
+
+export const clearSearchResults = () => ({
+    type: postsActionTypes.CLEAR_SEARCH_RESULTS,
+});
+
+
+
+export const setClearedSearchResults = () => ({
+    type: postsActionTypes.SET_CLEARED_SEARCH_RESULTS,
+});
+
+

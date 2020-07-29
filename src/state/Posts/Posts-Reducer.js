@@ -31,6 +31,11 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 ...state,
                 post: action.payload.post
             }
+        case postsActionTypes.SET_CLEARED_SEARCH_RESULTS: 
+            return {
+                ...state,
+                results: []
+            }
         default: 
             return state;
     }

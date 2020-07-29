@@ -1,6 +1,6 @@
 import React from "react";
-import { withStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/styles';
 
 const styles = (theme) => {
     return {
@@ -27,41 +27,40 @@ const styles = (theme) => {
       },
     };
   };
-  
-class Posts extends React.Component {
-    render() {
-        const { posts, classes } = this.props;
 
-        return (
-          <div className={classes.root}>
-              {posts.map((post) => (
-                  <div key={post.id} className={classes.titleAndBodyWrapper}>
-                    <div className={classes.titleAndBodyBorder}>
-                        <div className={classes.titleAndBody}>
-                            Title:
-                        </div>
-                        <div>
-                            {post.title}
-                        </div>
-                    </div>
-                    <div className={classes.titleAndBodyBorder}>
-                        <div className={classes.titleAndBody}>
-                            Body:
-                        </div>
-                        <div>
-                            {post.body}
-                        </div>
-                    </div>
-                    <Link to={`/edit-post-${post.id}`} className={classes.link}>
-                        <div className={classes.titleAndBodyBorder}>
-                            Edit
-                        </div>
-                    </Link>
+function Posts(props) {
+    const { classes, posts } = props;
+
+    return (
+        <div className={classes.root}>
+        {posts.map((post) => (
+            <div key={post.id} className={classes.titleAndBodyWrapper}>
+              <div className={classes.titleAndBodyBorder}>
+                  <div className={classes.titleAndBody}>
+                      Title:
                   </div>
-              ))}
-          </div>
-        );
-      }
-}
+                  <div>
+                      {post.title}
+                  </div>
+              </div>
+              <div className={classes.titleAndBodyBorder}>
+                  <div className={classes.titleAndBody}>
+                      Body:
+                  </div>
+                  <div>
+                      {post.body}
+                  </div>
+              </div>
+              <Link to={`/edit-post-${post.id}`} className={classes.link}>
+                  <div className={classes.titleAndBodyBorder}>
+                      Edit
+                  </div>
+              </Link>
+            </div>
+        ))}
+    </div>
+    )
+  }
 
-export default withStyles(styles)(Posts);
+
+  export default withStyles(styles)(Posts)
