@@ -1,9 +1,9 @@
 import React from "react";
-import { withStyles } from '@material-ui/styles';
+import { withRouter } from 'react-router';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/styles';
 import { clearSearchResults } from "../../state/Posts/Posts-Actions";
-import { withRouter } from 'react-router';
 
 const styles = (theme) => {
     return {

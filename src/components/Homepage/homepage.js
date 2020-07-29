@@ -1,10 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
 import Dropdown from '../Drop-Down/drop-down';
-import { connect } from "react-redux";
 import { getPostsRequest, getSearchResults } from "../../state/Posts/Posts-Actions";
-import { Link } from 'react-router-dom';
 
 const styles = (theme) => {
     return {
