@@ -31,6 +31,10 @@ const styles = (theme) => {
 function Posts(props) {
     const { classes, posts } = props;
 
+    if (!posts) { 
+        return <div></div>
+    };
+
     return (
         <div className={classes.root}>
         {posts.map((post) => (

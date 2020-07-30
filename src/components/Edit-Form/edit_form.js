@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import Dropdown from '../Drop-Down/drop-down';
+import { connect } from "react-redux";
+import { editPost, setDropDownResults, getPostsRequest } from "../../state/Posts/Posts-Actions";
+import { getSinglePostInState } from "../../state/Posts/Posts-Selectors";
 
 const styles = (theme) => {
     return {
@@ -42,17 +44,13 @@ const styles = (theme) => {
   };
   
 class EditForm extends React.Component {
-    constructor(props){ 
+    constructor(props) { 
         super(props);
         this.state = this.props.post;
     }
 
     componentDidMount() { 
-        if (this.props.paramsId !== 'new' && !this.props.postInState) { 
-            this.props.getSinglePostRequest(this.props.paramsId);
-        } else if (this.props.paramsId === 'new' && this.props.posts.length === 0) { 
-            this.props.getPostsRequest();
-        }
+      this.props.getPostsRequest();
     }
 
     componentDidUpdate(prevProps, prevState) { 
@@ -71,11 +69,11 @@ class EditForm extends React.Component {
   
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.editPost(this.state);
+        this.props.editPost(this.state, this.props.history);
     }
 
     handleInputChange = (e, type) => {  
-        this.props.getDropDownResults(e.target.value);
+        this.props.setDropDownResults(e.target.value);
         
         this.setState({
             [type]: e.target.value,
@@ -84,6 +82,11 @@ class EditForm extends React.Component {
 
     render() {
         const { classes, dropdown } = this.props;
+        const { title, body } = this.state;
+
+        if (!this.props.post) { 
+          return <div></div>
+        };
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
@@ -99,7 +102,7 @@ class EditForm extends React.Component {
                         className={classes.input} 
                         placeholder='Title' 
                         onChange={(e) => this.handleInputChange(e, 'title')}
-                        value={this.state.title}
+                        value={title}
                     />
                     {dropdown.length > 0 && dropdown.length !== 100 && (
                         <Dropdown />
@@ -113,7 +116,7 @@ class EditForm extends React.Component {
                         className={classes.textarea} 
                         placeholder='Body'  
                         onChange={(e) => this.handleInputChange(e, 'body')}
-                        value={this.state.body}
+                        value={body}
                     />
                 </div>
             </div>
@@ -125,4 +128,34 @@ class EditForm extends React.Component {
       }
 }
 
-export default withStyles(styles)(EditForm);
+
+const mapStateToProps = ({ posts }, ownProps) => {
+    const paramsId = ownProps.match.params.id;
+    const foundPost = getSinglePostInState(posts, paramsId);
+    const post = (foundPost && paramsId !== 'new') ? foundPost : {
+      body: '',
+      id: '',
+      title: '',
+      userId: '',
+    };
+
+    return {
+      post,
+      paramsId,
+      dropdown: posts.dropdown,
+      posts: posts.posts,
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => { 
+    return {
+      editPost: (id, history) => dispatch(editPost(id, history)),
+      setDropDownResults: (value) => dispatch(setDropDownResults(value)),
+      getPostsRequest: () => dispatch(getPostsRequest()),
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withStyles(styles)(EditForm));

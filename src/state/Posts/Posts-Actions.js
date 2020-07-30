@@ -25,22 +25,11 @@ export const setDropDownResults = (result) => ({
     }
 });
 
-export const getSinglePostRequest = (id) => ({
-    type: postsActionTypes.GET_SINGLE_POST_REQUEST,
-    id,
-});
-
-export const setSinglePostSuccess = (post) => ({
-    type: postsActionTypes.SET_SINGLE_POST_SUCCESS,
-    payload: {
-        post
-    },
-});
-
-export const editPost = (post) => ({
+export const editPost = (post, history) => ({
     type: postsActionTypes.EDIT_POST,
     payload: {
-        post
+        post,
+        history
     },
 });
 

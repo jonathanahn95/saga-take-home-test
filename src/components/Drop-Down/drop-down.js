@@ -40,6 +40,10 @@ class DropDown extends React.Component {
     
     render() {
       const { dropdown, classes } = this.props;
+      
+      if (!dropdown) { 
+        return <div></div>;
+      }
         
         return (
           <div className={classes.root}>
