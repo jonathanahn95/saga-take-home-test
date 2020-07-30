@@ -4,6 +4,9 @@ import Dropdown from '../Drop-Down/drop-down';
 import { connect } from "react-redux";
 import { editPost, setDropDownResults, getPostsRequest } from "../../state/Posts/Posts-Actions";
 import { getSinglePostInState } from "../../state/Posts/Posts-Selectors";
+import { Typography, Input } from '@material-ui/core';
+import { bindActionCreators } from 'redux';
+import PropTypes, { shape, number, string } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -11,33 +14,37 @@ const styles = (theme) => {
         maxWidth: '980px',
         margin: 'auto', 
         border: '1px solid #ccc',
-        padding: '15px',
+        padding: theme.padding,
       },
       title: {
           fontSize: '25px',
           textAlign: 'center',
       },
       inputBorder: {
-        border: '1px solid black',
+        border: theme.border,
         padding: '20px',
-        margin: '15px',
+        margin: theme.margin,
       },
       header: {
         fontSize: '18px',
-        margin: '15px 0',
+        margin: `${theme.margin} 0`
       },
       textarea: {
           width: '80%',
           height: '150px',
+          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+          fontSize: '16px',
+          padding: theme.padding,
       },
       input: {
           width: '80%',
+          padding: theme.padding,
       },
       button: {
-        padding: '15px',
-        margin: '15px',
+        padding: theme.padding,
+        margin: theme.margin,
         backgroundColor: 'white',
-        border: '1px solid black',
+        border: theme.border,
         cursor: 'pointer',
       },
     };
@@ -96,15 +103,15 @@ class EditForm extends React.Component {
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
-            <div className={classes.title}>
+            <Typography className={classes.title}>
                 Edit Form
-            </div>
+            </Typography>
             <div>
                 <div className={classes.inputBorder}>
-                    <div className={classes.header}>
+                    <Typography className={classes.header}>
                         Title:
-                    </div>
-                    <input 
+                    </Typography>
+                    <Input 
                         className={classes.input} 
                         placeholder='Title' 
                         onChange={(e) => this.handleInputChange(e, 'title')}
@@ -113,9 +120,9 @@ class EditForm extends React.Component {
                     <Dropdown />
                 </div>
                 <div className={classes.inputBorder}>
-                    <div className={classes.header}>
+                    <Typography className={classes.header}>
                         Body:
-                    </div>
+                    </Typography>
                     <textarea 
                         className={classes.textarea} 
                         placeholder='Body'  
@@ -124,9 +131,9 @@ class EditForm extends React.Component {
                     />
                 </div>
             </div>
-                <button className={classes.button}>
-                    Edit Form
-                </button>
+            <button className={classes.button}>
+                Edit Form
+            </button>
           </form>
         );
       }
@@ -155,10 +162,17 @@ const mapStateToProps = ({ posts }, ownProps) => {
   
   const mapDispatchToProps = dispatch => { 
     return {
-      editPost: (id, history) => dispatch(editPost(id, history)),
-      setDropDownResults: (value) => dispatch(setDropDownResults(value)),
-      getPostsRequest: () => dispatch(getPostsRequest()),
+      editPost: bindActionCreators(editPost, dispatch),
+      setDropDownResults: bindActionCreators(setDropDownResults, dispatch),
+      getPostsRequest: bindActionCreators(getPostsRequest, dispatch),
     };
+  };
+
+  EditForm.propTypes = {
+    title: string,
+    body: string,
+    id: string,
+    userId: number,
   };
   
   export default connect(

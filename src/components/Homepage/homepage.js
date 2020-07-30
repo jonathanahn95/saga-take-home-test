@@ -6,6 +6,9 @@ import Posts from '../Posts/posts';
 import Dropdown from '../Drop-Down/drop-down';
 import { getPostsRequest, getDropDownResults, getSearchResults } from "../../state/Posts/Posts-Actions";
 import { getSearchSelectorResults } from '../../state/Posts/Posts-Selectors';
+import { Button, Input, Typography } from '@material-ui/core';
+import { bindActionCreators } from 'redux';
+import PropTypes, { shape, number, string } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -18,29 +21,31 @@ const styles = (theme) => {
         textAlign: 'center',
       },
       editAPost: {
-        fontSize: '35px',
+        fontSize: '25px',
         textAlign: 'center',
-        border: '1px solid black',
-        padding: '15px',
+        border: theme.border,
+        padding: theme.padding,
         width: '50%',
         margin: '20px auto',
         cursor: 'pointer',
       },
       searchInput: {
         width: '96.5%',
-        padding: '15px',
+        padding: theme.padding,
         margin: '10px 0 0 0',
       },
       link: {
         textDecoration: 'none',
         color: 'black',
+        display: 'flex',
       },
       button: {
         backgroundColor: 'white',
-        padding: '15px 30px',
+        padding: theme.padding,
         margin: '10px 0',
         cursor: 'pointer',
         width: '100%',
+        border: theme.border,
       },
     };
   };
@@ -76,21 +81,21 @@ class Homepage extends React.Component {
         return (
           <div className={classes.root}>
               <form onSubmit={this.handleOnSubmit}>
-                <div className={classes.title}>
+                <Typography className={classes.title}>
                   Search by Title:
-                </div>
-                <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
+                </Typography>
+                <Input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
                 <Dropdown />
-                <button className={classes.button}>Submit</button>
+                <Button className={classes.button}>Submit</Button>
               </form>
               <Link className={classes.link} to={'/edit-post-new'}>
-                <div className={classes.editAPost}>
+                <Button className={classes.editAPost}>
                   Edit a Post
-                </div>
+                </Button>
               </Link>
-              <div className={classes.title}>
+              <Typography className={classes.title}>
                 Posts:
-              </div>
+              </Typography>
               {renderPosts.length > 0 && (
                 <Posts posts={renderPosts}/>
               )}
@@ -108,11 +113,31 @@ const mapStateToProps = ({posts}) => {
 
 const mapDispatchToProps = dispatch => { 
   return {
-      getPostsRequest: () => dispatch(getPostsRequest()),
-      getDropDownResults: (value) => dispatch(getDropDownResults(value)),
-      getSearchResults: (value) => dispatch(getSearchResults(value)),
+      getPostsRequest: bindActionCreators(getPostsRequest, dispatch),
+      getDropDownResults: bindActionCreators(getDropDownResults, dispatch),
+      getSearchResults: bindActionCreators(getSearchResults, dispatch),
   };
 };
+
+Homepage.propTypes = {
+  posts: PropTypes.arrayOf(
+    shape({
+      title: string,
+      body: string,
+      id: number,
+      userId: number,
+    })
+  ).isRequired,
+  searchResults: PropTypes.arrayOf(
+    shape({
+      title: string,
+      body: string,
+      id: number,
+      userId: number,
+    })
+  ).isRequired,
+};
+
 
 export default connect(
   mapStateToProps,

@@ -9,6 +9,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './state/sagas/index';
 import { HashRouter } from "react-router-dom";
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './styles/theme';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
@@ -33,11 +35,13 @@ const store = createStore(reducers, enhancer);
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

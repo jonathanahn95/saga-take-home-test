@@ -2,7 +2,7 @@ import postsActionTypes from './Posts-ActionTypes';
 
 const INITIAL_STATE = {
     posts: [],
-    error: '',
+    error: null,
     post: {},
     dropdown: '',
     searchResults: '',
@@ -20,11 +20,6 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 ...state,
                 dropdown: action.payload.result,
             }
-        case postsActionTypes.SET_SINGLE_POST_SUCCESS: 
-            return {
-                ...state,
-                post: action.payload.post
-            }
         case postsActionTypes.SET_EDIT_POST: 
             return {
                 ...state,
@@ -33,7 +28,7 @@ export default function postReducer(state = INITIAL_STATE , action) {
         case postsActionTypes.SET_CLEARED_DROPDOWN_RESULTS: 
             return {
                 ...state,
-                dropdown: []
+                dropdown: ''
             }
         case postsActionTypes.SET_SEARCH_RESULT: 
             return {
