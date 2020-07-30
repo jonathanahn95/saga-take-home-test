@@ -1,6 +1,6 @@
-export const getDropDownResults = (state, action) => {
-    if (state.posts) {
-        return state.posts.filter((post) => post.title.includes(action.payload.result))
+export const getSearchSelectorResults = (posts, searchWord) => {
+    if (posts) {
+        return posts.filter((post) => post.title.includes(searchWord))
     }
     return [];
 };

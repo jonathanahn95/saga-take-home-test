@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/styles';
 import Posts from '../Posts/posts';
 import Dropdown from '../Drop-Down/drop-down';
 import { getPostsRequest, getDropDownResults, getSearchResults } from "../../state/Posts/Posts-Actions";
+import { getSearchSelectorResults } from '../../state/Posts/Posts-Selectors';
 
 const styles = (theme) => {
     return {
@@ -69,7 +70,7 @@ class Homepage extends React.Component {
     }
 
     render() {
-      const { posts, classes, dropdown, searchResults } = this.props;
+      const { posts, classes, searchResults } = this.props;
       const renderPosts = searchResults.length > 0 ? searchResults : posts;
         
         return (
@@ -79,9 +80,7 @@ class Homepage extends React.Component {
                   Search by Title:
                 </div>
                 <input className={classes.searchInput} placeholder='Search by Title' onChange={this.onChangeHandler}/>
-                {dropdown.length > 0 && dropdown.length !== 100 && (
-                  <Dropdown />
-                )}
+                <Dropdown />
                 <button className={classes.button}>Submit</button>
               </form>
               <Link className={classes.link} to={'/edit-post-new'}>
@@ -100,11 +99,10 @@ class Homepage extends React.Component {
       }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({posts}) => {
   return {
-    posts: state.posts.posts,
-    dropdown: state.posts.dropdown,
-    searchResults: state.posts.searchResults
+    posts: posts.posts,
+    searchResults: getSearchSelectorResults(posts.posts, posts.searchResults),
   };
 };
 

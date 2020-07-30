@@ -32,7 +32,7 @@ function Posts(props) {
     const { classes, posts } = props;
 
     if (!posts) { 
-        return <div></div>
+        return null;
     };
 
     return (

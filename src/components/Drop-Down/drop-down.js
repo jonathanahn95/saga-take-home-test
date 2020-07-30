@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import { clearDropDownResults } from "../../state/Posts/Posts-Actions";
+import { getSearchSelectorResults } from '../../state/Posts/Posts-Selectors';
 
 const styles = (theme) => {
     return {
@@ -41,8 +42,8 @@ class DropDown extends React.Component {
     render() {
       const { dropdown, classes } = this.props;
       
-      if (!dropdown) { 
-        return <div></div>;
+      if (dropdown.length === 0 || dropdown.length === 100) { 
+        return null;
       }
         
         return (
@@ -63,7 +64,7 @@ const mapStateToProps = (state, ownProps) => {
   const paramsId = ownProps.match.params.id;
 
   return {
-      dropdown: state.posts.dropdown,
+      dropdown: getSearchSelectorResults(state.posts.posts, state.posts.dropdown),
       paramsId,
   };
 };

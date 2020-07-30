@@ -56,14 +56,19 @@ class EditForm extends React.Component {
     componentDidUpdate(prevProps, prevState) { 
         const { post } = this.props;
 
+        //update state with foundPost in msp
         if (prevProps.post.id !== post.id) { 
-            this.setState({
-                body: post.body,
-                id: post.id,
-                title: post.title,
-                userId: post.userId,
-            })
+            this.preFill(post);
         }
+    }
+
+    preFill(post) { 
+      this.setState({
+          body: post.body,
+          id: post.id,
+          title: post.title,
+          userId: post.userId,
+      })
     }
 
   
@@ -81,12 +86,13 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { classes, dropdown } = this.props;
+        const { classes } = this.props;
         const { title, body } = this.state;
 
         if (!this.props.post) { 
           return <div></div>
         };
+
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
@@ -104,9 +110,7 @@ class EditForm extends React.Component {
                         onChange={(e) => this.handleInputChange(e, 'title')}
                         value={title}
                     />
-                    {dropdown.length > 0 && dropdown.length !== 100 && (
-                        <Dropdown />
-                    )}
+                    <Dropdown />
                 </div>
                 <div className={classes.inputBorder}>
                     <div className={classes.header}>
@@ -132,6 +136,8 @@ class EditForm extends React.Component {
 const mapStateToProps = ({ posts }, ownProps) => {
     const paramsId = ownProps.match.params.id;
     const foundPost = getSinglePostInState(posts, paramsId);
+
+    // if url is /edit-post-new set it to a blank form, else if url is /edit-post-:id prefill it with foundPost
     const post = (foundPost && paramsId !== 'new') ? foundPost : {
       body: '',
       id: '',
