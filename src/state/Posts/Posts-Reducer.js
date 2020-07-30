@@ -35,6 +35,21 @@ export default function postReducer(state = INITIAL_STATE , action) {
                 ...state,
                 searchResults: action.payload.result
             }
+        case postsActionTypes.SET_POSTS_ERROR: 
+            return {
+                ...state,
+                error: action.payload
+            }
+        case postsActionTypes.SET_EDIT_POST_ERROR: 
+            return {
+                ...state,
+                error: action.payload
+            }
+        case postsActionTypes.SET_CLEAR_ERROR: 
+            return {
+                ...state,
+                error: null,
+            }
         default: 
             return state;
     }

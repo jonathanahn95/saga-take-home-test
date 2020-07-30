@@ -6,7 +6,7 @@ import { editPost, setDropDownResults, getPostsRequest } from "../../state/Posts
 import { getSinglePostInState } from "../../state/Posts/Posts-Selectors";
 import { Typography, Input } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
-import PropTypes, { shape, number, string } from 'prop-types';
+import { number, string } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -46,6 +46,10 @@ const styles = (theme) => {
         backgroundColor: 'white',
         border: theme.border,
         cursor: 'pointer',
+      },
+      errorMessage: {
+        color: 'red',
+        fontSize: '18px',
       },
     };
   };
@@ -93,13 +97,12 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, error } = this.props;
         const { title, body } = this.state;
 
         if (!this.props.post) { 
           return <div></div>
         };
-
 
         return (
           <form className={classes.root} onSubmit={this.handleSubmit}>
@@ -131,9 +134,14 @@ class EditForm extends React.Component {
                     />
                 </div>
             </div>
-            <button className={classes.button}>
-                Edit Form
-            </button>
+            <div>
+              <button className={classes.button}>
+                  Edit Form
+              </button>
+              {error && (
+                <Typography className={classes.errorMessage}>Please fill out the form or select an entry to edit</Typography>
+              )}
+            </div>
           </form>
         );
       }
@@ -153,6 +161,7 @@ const mapStateToProps = ({ posts }, ownProps) => {
     };
 
     return {
+      error: posts.error,
       post,
       paramsId,
       dropdown: posts.dropdown,

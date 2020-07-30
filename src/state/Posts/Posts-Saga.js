@@ -5,6 +5,9 @@ import {
     setClearedDropDownResults,
     setSearchResults,
     setEditPost,
+    setPostsFailure,
+    setEditPostError,
+    setClearError,
 } from './Posts-Actions';
 import {  
     editPost,
@@ -18,9 +21,8 @@ export function* getPostsRequest() {
         if (result.status === 200) {
             yield put(setPostsSuccess(result.data));
         }
-        // have 3 functions setPosts, setPostsSuccess, setPostsFailed
     } catch (e) { 
-
+        yield put(setPostsFailure(e.message));
     }
 }
 
@@ -29,13 +31,7 @@ function* watchGetPostsRequest() {
 }
 
 export function* getDropDownResult(action) { 
-    try { 
-        yield put(setDropDownResults(action.payload.result))
-    } catch (e) { 
-        // yield put(usersError({
-        //     error: 'An error occured',
-        // }))
-    }
+    yield put(setDropDownResults(action.payload.result))
 }
 
 function* watchDropDownResult() {
@@ -56,11 +52,10 @@ export function* editPostRequest(action) {
         if (result.status === 200) { 
             yield put(setEditPost(result.data))
             action.payload.history.push('/')
+            yield put(setClearError())
         }
     } catch (e) { 
-        // yield put(usersError({
-        //     error: 'An error occured',
-        // }))
+        yield put(setEditPostError(e.message));
     }
 }
 

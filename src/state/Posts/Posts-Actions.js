@@ -65,3 +65,17 @@ export const setSearchResults = (result) => ({
         result
     }
 });
+
+export const setPostsFailure = (payload) => ({
+    type: postsActionTypes.SET_POSTS_ERROR,
+    payload
+  });
+
+export const setEditPostError = (payload) => ({
+    type: postsActionTypes.SET_EDIT_POST_ERROR,
+    payload
+  });
+
+export const setClearError = () => ({
+    type: postsActionTypes.SET_CLEAR_ERROR,
+  });

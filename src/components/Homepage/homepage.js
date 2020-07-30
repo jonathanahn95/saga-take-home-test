@@ -47,6 +47,10 @@ const styles = (theme) => {
         width: '100%',
         border: theme.border,
       },
+      errorMessage: {
+        textAlign: 'center',
+        margin: theme.margin,
+      }
     };
   };
   
@@ -75,9 +79,9 @@ class Homepage extends React.Component {
     }
 
     render() {
-      const { posts, classes, searchResults } = this.props;
+      const { posts, classes, searchResults, error } = this.props;
       const renderPosts = searchResults.length > 0 ? searchResults : posts;
-        
+
         return (
           <div className={classes.root}>
               <form onSubmit={this.handleOnSubmit}>
@@ -96,7 +100,9 @@ class Homepage extends React.Component {
               <Typography className={classes.title}>
                 Posts:
               </Typography>
-              {renderPosts.length > 0 && (
+              {error ? (
+                  <Typography className={classes.errorMessage} variant="h4">There was a problem loading the posts.</Typography>
+                ) : renderPosts.length > 0 && (
                 <Posts posts={renderPosts}/>
               )}
           </div>
@@ -107,6 +113,7 @@ class Homepage extends React.Component {
 const mapStateToProps = ({posts}) => {
   return {
     posts: posts.posts,
+    error: posts.error,
     searchResults: getSearchSelectorResults(posts.posts, posts.searchResults),
   };
 };
@@ -136,6 +143,7 @@ Homepage.propTypes = {
       userId: number,
     })
   ).isRequired,
+  error: PropTypes.string,
 };
 
 
