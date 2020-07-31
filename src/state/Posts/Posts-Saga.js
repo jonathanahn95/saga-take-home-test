@@ -53,6 +53,7 @@ export function* editPostRequest(action) {
             const posts = yield select((state) => state.posts.posts);
             const updatedPosts = posts.map((post) => post.id === action.payload.post.id ? result.data : post);
             
+            console.log(result.data, updatedPosts, 123123)
             yield put(setEditPost(result.data, updatedPosts))
             yield put(setClearError())
         }
