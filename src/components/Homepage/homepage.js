@@ -22,7 +22,7 @@ const styles = (theme) => {
         textAlign: 'center',
       },
       editAPost: {
-        fontSize: '25px',
+        fontSize: '20px',
         textAlign: 'center',
         border: theme.border,
         padding: theme.padding,
