@@ -23,7 +23,8 @@ export default function postReducer(state = INITIAL_STATE , action) {
         case postsActionTypes.SET_EDIT_POST: 
             return {
                 ...state,
-                post: action.payload.post
+                post: action.payload.post,
+                posts: action.payload.posts
             }
         case postsActionTypes.SET_CLEARED_DROPDOWN_RESULTS: 
             return {

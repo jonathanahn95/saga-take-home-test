@@ -33,10 +33,11 @@ export const editPost = (post, history) => ({
     },
 });
 
-export const setEditPost = (post) => ({
+export const setEditPost = (post, posts) => ({
     type: postsActionTypes.SET_EDIT_POST,
     payload: {
-        post
+        post,
+        posts
     },
 });
 

@@ -9,6 +9,8 @@ const styles = (theme) => {
       root: {
         maxWidth: '980px',
         margin: 'auto', 
+        border: '1px solid #ccc',
+        borderRadius: '5px',
       },
       titleAndBodyWrapper: {
           padding: theme.padding,

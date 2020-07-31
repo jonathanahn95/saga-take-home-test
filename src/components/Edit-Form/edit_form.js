@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/styles';
 import Dropdown from '../Drop-Down/drop-down';
+import Posts from '../Posts/posts';
 import { connect } from "react-redux";
 import { editPost, setDropDownResults, getPostsRequest } from "../../state/Posts/Posts-Actions";
 import { getSinglePostInState } from "../../state/Posts/Posts-Selectors";
-import { Typography, Input } from '@material-ui/core';
+import { Typography, Input, Button } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
 import { number, string } from 'prop-types';
 
@@ -13,8 +15,13 @@ const styles = (theme) => {
       root: {
         maxWidth: '980px',
         margin: 'auto', 
-        border: '1px solid #ccc',
         padding: theme.padding,
+        display: 'flex',
+        flexDirection: 'column',
+      },
+      border: {
+        border: '1px solid #ccc',
+        margin: '30px 0',
       },
       title: {
           fontSize: '25px',
@@ -50,6 +57,21 @@ const styles = (theme) => {
       errorMessage: {
         color: 'red',
         fontSize: '18px',
+      },
+      goToHomePage: {
+        textDecoration: 'none',
+        border: '1px solid black',
+        padding: theme.padding,
+        margin: 'auto',
+        borderRadius: '5px',
+      },
+      form: {
+        padding: theme.padding,
+      },
+      viewAllPosts: {
+        fontSize: '35px',
+        margin: `${theme.margin} 0`,
+        textAlign: 'center',
       },
     };
   };
@@ -97,7 +119,7 @@ class EditForm extends React.Component {
     }
 
     render() {
-        const { classes, error } = this.props;
+        const { classes, error, posts } = this.props;
         const { title, body } = this.state;
 
         if (!this.props.post) { 
@@ -105,44 +127,55 @@ class EditForm extends React.Component {
         };
 
         return (
-          <form className={classes.root} onSubmit={this.handleSubmit}>
-            <Typography className={classes.title}>
-                Edit Form
-            </Typography>
-            <div>
-                <div className={classes.inputBorder}>
-                    <Typography className={classes.header}>
-                        Title:
-                    </Typography>
-                    <Input 
-                        className={classes.input} 
-                        placeholder='Title' 
-                        onChange={(e) => this.handleInputChange(e, 'title')}
-                        value={title}
-                    />
-                    <Dropdown />
+          <div className={classes.root} >
+            <Link to={'/'} className={classes.goToHomePage}>
+                <Button>Go To Homepage</Button>
+            </Link>
+            <div className={classes.border}>
+              <form onSubmit={this.handleSubmit} className={classes.form}>
+                <Typography className={classes.title}>
+                    Edit Form
+                </Typography>
+                <div>
+                    <div className={classes.inputBorder}>
+                        <Typography className={classes.header}>
+                            Title:
+                        </Typography>
+                        <Input 
+                            className={classes.input} 
+                            placeholder='Title' 
+                            onChange={(e) => this.handleInputChange(e, 'title')}
+                            value={title}
+                        />
+                        <Dropdown />
+                    </div>
+                    <div className={classes.inputBorder}>
+                        <Typography className={classes.header}>
+                            Body:
+                        </Typography>
+                        <textarea 
+                            className={classes.textarea} 
+                            placeholder='Body'  
+                            onChange={(e) => this.handleInputChange(e, 'body')}
+                            value={body}
+                        />
+                    </div>
                 </div>
-                <div className={classes.inputBorder}>
-                    <Typography className={classes.header}>
-                        Body:
-                    </Typography>
-                    <textarea 
-                        className={classes.textarea} 
-                        placeholder='Body'  
-                        onChange={(e) => this.handleInputChange(e, 'body')}
-                        value={body}
-                    />
+                <div>
+                  <button className={classes.button}>
+                      Edit Form
+                  </button>
+                  {error && (
+                    <Typography className={classes.errorMessage}>Please fill out the form or select an entry to edit</Typography>
+                  )}
                 </div>
+              </form>
             </div>
-            <div>
-              <button className={classes.button}>
-                  Edit Form
-              </button>
-              {error && (
-                <Typography className={classes.errorMessage}>Please fill out the form or select an entry to edit</Typography>
-              )}
-            </div>
-          </form>
+            <Typography className={classes.viewAllPosts}>View All Posts:</Typography>
+            {posts.length > 0 && (
+              <Posts posts={posts} />
+            )}
+          </div>
         );
       }
 }

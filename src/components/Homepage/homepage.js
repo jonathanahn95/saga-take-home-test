@@ -18,6 +18,7 @@ const styles = (theme) => {
       },
       title: {
         fontSize: '35px',
+        margin: `${theme.margin} 0`,
         textAlign: 'center',
       },
       editAPost: {
@@ -50,7 +51,12 @@ const styles = (theme) => {
       errorMessage: {
         textAlign: 'center',
         margin: theme.margin,
-      }
+      },
+      form: {
+        border: '1px solid #ccc',
+        padding: '15px',
+        borderRadius: '5px',
+      },
     };
   };
   
@@ -84,7 +90,7 @@ class Homepage extends React.Component {
 
         return (
           <div className={classes.root}>
-              <form onSubmit={this.handleOnSubmit}>
+              <form onSubmit={this.handleOnSubmit} className={classes.form}>
                 <Typography className={classes.title}>
                   Search by Title:
                 </Typography>

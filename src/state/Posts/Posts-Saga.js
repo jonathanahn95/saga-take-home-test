@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, fork, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, call, fork, put, select } from 'redux-saga/effects';
 import { 
     setPostsSuccess,
     setDropDownResults,
@@ -50,8 +50,10 @@ export function* editPostRequest(action) {
     try { 
         const result = yield call(editPost, action.payload.post)
         if (result.status === 200) { 
-            yield put(setEditPost(result.data))
-            action.payload.history.push('/')
+            const posts = yield select((state) => state.posts.posts);
+            const updatedPosts = posts.map((post) => post.id === action.payload.post.id ? result.data : post);
+            
+            yield put(setEditPost(result.data, updatedPosts))
             yield put(setClearError())
         }
     } catch (e) { 
